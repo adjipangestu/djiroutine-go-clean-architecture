@@ -1,0 +1,93 @@
+package main
+
+import (
+	"backend-simwasin/internal/http/routes"
+	"backend-simwasin/internal/modules/auth/usercase"
+	"backend-simwasin/internal/modules/user/repository"
+	"backend-simwasin/internal/modules/user/usercase"
+	"backend-simwasin/pkg/config"
+	"backend-simwasin/pkg/logger"
+	"backend-simwasin/pkg/sso"
+	"context"
+	"log"
+	"os"
+	"strconv"
+	"time"
+
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+)
+
+func test() {
+	// Load environment variables
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// Setup dependencies
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	oauthClient := initOAuth()
+	mainDbService := initDB(ctx)
+
+	// Initialize use cases
+	authUseCase := usercase.NewAuthUseCase(oauthClient)
+
+	userUsecase := usercase.NewUserUsecase(repository.NewUserRepository(mainDbService, logger.L), getTimeout())
+
+	useCases := map[string]interface{}{
+		"auth": authUseCase,
+		"user": userUsecase,
+	}
+
+	// Setup server
+	e := echo.New()
+	e.Use(middleware.Logger(), middleware.Recover(), middleware.CORS())
+
+	routes.SetupRoutes(e, useCases)
+
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Fatal(e.Start(":" + port))
+}
+
+func initOAuth() *sso.OAuth2Client {
+	clientID, clientSecret, redirectURI := os.Getenv("OAUTH_CLIENT_ID"), os.Getenv("OAUTH_CLIENT_SECRET"), os.Getenv("OAUTH_REDIRECT_URI")
+	environment := sso.Environment(os.Getenv("OAUTH_ENVIRONMENT"))
+	if environment == "" {
+		environment = sso.Sandbox
+	}
+
+	oauthClient, err := sso.NewOAuth2Client(clientID, clientSecret, redirectURI, environment, os.Getenv("REDIS_URL"))
+	if err != nil {
+		log.Fatalf("Failed to initialize OAuth client: %v", err)
+	}
+	return oauthClient
+}
+
+func initDB(ctx context.Context) config.DBService {
+	pgPort, _ := strconv.Atoi(os.Getenv("PG_PORT"))
+	dbConfig := config.DBConfig{
+		Host: os.Getenv("PG_HOST"), Port: pgPort, User: os.Getenv("PG_USER"),
+		Password: os.Getenv("PG_PASS"), DatabaseName: os.Getenv("PG_DB"),
+		MaxConns: 10, MinConns: 2, IdleTimeout: 5 * time.Minute, SSLMode: "disable",
+	}
+
+	dbService, err := config.NewDBService(ctx, dbConfig)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+
+	// dbService sudah bertipe config.DBService, jadi tidak perlu pointer
+	return dbService
+}
+
+func getTimeout() time.Duration {
+	timeout, _ := strconv.Atoi(os.Getenv("APP_TIMEOUT"))
+	return time.Duration(timeout) * time.Second
+}
