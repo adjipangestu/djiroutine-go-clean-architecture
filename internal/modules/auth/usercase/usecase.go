@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 	"crypto/rand"
-	"djiroutine-clean-architecture/internal/modules/auth"
-	"djiroutine-clean-architecture/pkg/errors"
-	"djiroutine-clean-architecture/pkg/sso"
+	"djiroutine-go-clean-architecture/internal/modules/auth"
+	"djiroutine-go-clean-architecture/pkg/errors"
+	"djiroutine-go-clean-architecture/pkg/sso"
 	"encoding/base64"
 )
 

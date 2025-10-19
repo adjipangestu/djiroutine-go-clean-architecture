@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"djiroutine-clean-architecture/internal/entity"
+	"djiroutine-go-clean-architecture/internal/entity"
 )
 
 type UseCase interface {

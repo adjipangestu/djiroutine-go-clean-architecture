@@ -2,12 +2,12 @@ package handler
 
 import (
 	"context"
-	"djiroutine-clean-architecture/internal/entity"
-	"djiroutine-clean-architecture/internal/modules/user"
-	"djiroutine-clean-architecture/pkg"
-	"djiroutine-clean-architecture/pkg/errors"
-	"djiroutine-clean-architecture/pkg/helper"
-	"djiroutine-clean-architecture/pkg/logger"
+	"djiroutine-go-clean-architecture/internal/entity"
+	"djiroutine-go-clean-architecture/internal/modules/user"
+	"djiroutine-go-clean-architecture/pkg"
+	"djiroutine-go-clean-architecture/pkg/errors"
+	"djiroutine-go-clean-architecture/pkg/helper"
+	"djiroutine-go-clean-architecture/pkg/logger"
 
 	"github.com/labstack/echo/v4"
 )

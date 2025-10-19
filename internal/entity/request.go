@@ -1,8 +1,8 @@
 package entity
 
 import (
-	"djiroutine-clean-architecture/pkg"
-	"djiroutine-clean-architecture/pkg/helper"
+	"djiroutine-go-clean-architecture/pkg"
+	"djiroutine-go-clean-architecture/pkg/helper"
 )
 
 // request

@@ -1,4 +1,4 @@
-module djiroutine-clean-architecture
+module djiroutine-go-clean-architecture
 
 go 1.24.0
 

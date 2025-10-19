@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"djiroutine-clean-architecture/internal/http/middleware"
-	"djiroutine-clean-architecture/internal/modules/auth"
-	authHandler "djiroutine-clean-architecture/internal/modules/auth/handler"
-	"djiroutine-clean-architecture/internal/modules/user"
-	userHandler "djiroutine-clean-architecture/internal/modules/user/handler"
-	"djiroutine-clean-architecture/pkg/logger"
+	"djiroutine-go-clean-architecture/internal/http/middleware"
+	"djiroutine-go-clean-architecture/internal/modules/auth"
+	authHandler "djiroutine-go-clean-architecture/internal/modules/auth/handler"
+	"djiroutine-go-clean-architecture/internal/modules/user"
+	userHandler "djiroutine-go-clean-architecture/internal/modules/user/handler"
+	"djiroutine-go-clean-architecture/pkg/logger"
 
 	"github.com/labstack/echo/v4"
 )

@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"djiroutine-clean-architecture/internal/modules/auth"
-	"djiroutine-clean-architecture/pkg/errors"
+	"djiroutine-go-clean-architecture/internal/modules/auth"
+	"djiroutine-go-clean-architecture/pkg/errors"
 	"fmt"
 	"net/http"
 	"strings"

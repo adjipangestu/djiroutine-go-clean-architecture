@@ -3,8 +3,8 @@ package helper
 import (
 	"bytes"
 	"crypto/rand"
-	pkg "djiroutine-clean-architecture/pkg"
-	"djiroutine-clean-architecture/pkg/errors"
+	pkg "djiroutine-go-clean-architecture/pkg"
+	"djiroutine-go-clean-architecture/pkg/errors"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"

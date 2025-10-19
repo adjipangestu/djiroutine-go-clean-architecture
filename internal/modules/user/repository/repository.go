@@ -2,9 +2,9 @@ package repository
 
 import (
 	"context"
-	"djiroutine-clean-architecture/internal/entity"
-	"djiroutine-clean-architecture/pkg/config"
-	"djiroutine-clean-architecture/pkg/logger"
+	"djiroutine-go-clean-architecture/internal/entity"
+	"djiroutine-go-clean-architecture/pkg/config"
+	"djiroutine-go-clean-architecture/pkg/logger"
 )
 
 type UserRepository struct {
